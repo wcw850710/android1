@@ -130,30 +130,37 @@ public class MainActivity extends AppCompatActivity {
 
     private void calculateBmi() {
         try {
-            BmiFormData formData = checkFormData();
-            String fullResult = getResult(formData);
+            BmiFormData bmiFormData = checkFormData();
+            String fullResult = bmiFormData.getAge() > 18 ? getResult(bmiFormData) : getGuidance(bmiFormData);
             resultText.setText(fullResult);
         } catch (Error ignored) {
         }
     }
 
-    @NonNull
-    private String getResult(BmiFormData formData) {
-        DecimalFormat decimalFormatter = new DecimalFormat("0.00");
-        int totalInches = formData.getFeet() * 12 + formData.getInches();
-        double heightInMeters = totalInches * 0.0254;
-        double bmi = formData.getWeight() / (heightInMeters * heightInMeters);
+    private String getGuidance(BmiFormData bmiFormData) {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        double bmi = bmiFormData.getBmi();
 
-        String bmiTextResult = decimalFormatter.format(bmi);
-        String fullResult;
-        if (bmi < 18.5) {
-            fullResult = bmiTextResult + " - 你太瘦了";
-        } else if (bmi > 25) {
-            fullResult = bmiTextResult + " - 你太胖了";
+        if (getMaleRadio().isChecked()) {
+            return decimalFormat.format(bmi) + " - 小於 18 歲的男孩請找醫生諮詢體重是否健康";
+        } else if (getFemaleRadio().isChecked()) {
+            return decimalFormat.format(bmi) + " - 小於 18 歲的女孩請找醫生諮詢體重是否健康";
         } else {
-            fullResult = bmiTextResult + " - 你有健康的體重";
+            return decimalFormat.format(bmi) + " - 小於 18 的你請找醫生諮詢體重是否健康";
         }
-        return fullResult;
+    }
+
+    private String getResult(BmiFormData bmiFormData) {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        double bmi = bmiFormData.getBmi();
+
+        if (bmi < 18.5) {
+            return decimalFormat.format(bmi) + " - 你太瘦了";
+        } else if (bmi > 25) {
+            return decimalFormat.format(bmi) + " - 你太胖了";
+        } else {
+            return decimalFormat.format(bmi) + " - 你有健康的體重";
+        }
     }
 
     @Override

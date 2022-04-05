@@ -5,12 +5,16 @@ public class BmiFormData {
     int feet;
     int inches;
     int weight;
+    double bmi;
 
     public BmiFormData(int age, int feet, int inches, int weight) {
         this.age = age;
         this.feet = feet;
         this.inches = inches;
         this.weight = weight;
+        int totalInches = feet * 12 + inches;
+        double heightInMeters = totalInches * 0.0254;
+        this.bmi = weight / (heightInMeters * heightInMeters);
     }
 
     public int getAge() {
@@ -43,5 +47,13 @@ public class BmiFormData {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public double getBmi() {
+        return bmi;
+    }
+
+    public void setBmi(double bmi) {
+        this.bmi = bmi;
     }
 }
