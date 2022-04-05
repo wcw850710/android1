@@ -110,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private BmiFormData checkFormData() throws Error {
-        String ageText = ageEditText.getText().toString();
-        String feetText = feetEditText.getText().toString();
-        String inchesText = inchesEditText.getText().toString();
-        String weightText = weightEditText.getText().toString();
+        String ageText = getAgeEditText().getText().toString();
+        String feetText = getFeetEditText().getText().toString();
+        String inchesText = getInchesEditText().getText().toString();
+        String weightText = getWeightEditText().getText().toString();
 
         if (ageText.equals("") || feetText.equals("") || inchesText.equals("") || weightText.equals("")) {
             Toast.makeText(MainActivity.this, "請填寫完整資訊!!", Toast.LENGTH_SHORT).show();
